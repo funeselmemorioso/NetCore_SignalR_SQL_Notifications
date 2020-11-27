@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<p>Enviar el mensaje a todos los browsers conectados</p>
+<button onclick="javascript: enviarMensaje();">Enviar</button>
+<br />
+<div id="div_mensajes"></div>
+
+<script src="~/lib/signalR/signalr.js"></script>
+
+<script>
+
+    // Esto establece el objeto conexion de SignalR
+    const connection = new signalR.HubConnectionBuilder().withUrl('/ChatHub').build();
+
+
+    connection.on("RecibirMensaje", (usuario, mensaje) => {
+        console.log(usuario + ' - ' + mensaje);
+        $('#div_mensajes').append('<p>' + mensaje + '</p>');
+    });
+
+   
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    function enviarMensaje(){
+        connection.invoke("EnviarMensaje", 'catapatac', 'hola soy catapatac').catch(err => console.error(err.toString()));
+    }
+
+</script>
