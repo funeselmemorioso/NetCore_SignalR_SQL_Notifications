@@ -12,7 +12,7 @@ namespace PruebaSignalR.Controllers
     {
         public IActionResult Index()
         {
-            // Index
+            // Indexeeee
             return View();
         }       
     }
